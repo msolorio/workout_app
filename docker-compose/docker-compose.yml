@@ -1,0 +1,48 @@
+version: "3.9"
+services:
+  workoutdb:
+    image: postgres:latest
+    container_name: workoutdb
+    hostname: workoutdb
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: workout-app-dev
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  app:
+    container_name: app
+    build:
+      context: ../server
+      dockerfile: Dockerfile.dev
+    stdin_open: true
+    depends_on:
+      - workoutdb
+    links:
+      - workoutdb
+    ports:
+      - 4000:4000
+    restart: unless-stopped
+    volumes:
+      - ../server:/app
+    command: npm run init-dev
+
+  client:
+    container_name: client
+    build:
+      context: ../client
+      dockerfile: Dockerfile.dev
+    stdin_open: true
+    ports:
+      - 3000:3000
+    restart: unless-stopped
+    volumes:
+      - ../client:/app
+
+
+volumes:
+  postgres-data:
