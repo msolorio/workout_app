@@ -35,6 +35,7 @@ services:
       - 3000:3000
     environment:
       REACT_APP_API_ENDPOINT: http://localhost:4000
+      FAST_REFRESH: false
     volumes:
       - ./client:/app
 
