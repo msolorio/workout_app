@@ -46,3 +46,8 @@ This is an ongoing project with critical and non-critical features still to be b
 - Gaurd against SQL injection for all client inputs
 - Improve related prisma queries to increase performance
 - Implement optimistic updates for data mutations with Redux
+
+<!-- 
+## Future Implementations and Lessons Learned
+- Use ES Modules to allow importing of TypeScript interfaces
+ -->
