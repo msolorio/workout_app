@@ -53,39 +53,14 @@ Enabled persistent data storage with Apollo GraphQL hooks while maintaining a lo
 </details>
 
 ---
-
-### Apollo GraphQL
-
-<details>
-  <summary>Learn More</summary>
-
-GraphQL enabled complete flexibility in requesting data on the client. However, this meant more work server side to resolve the data and enable this flexibility.
-
-- Greatly enjoyed setting up the GraphQL server.
-  - Managing the complexity of related models
-  - Allowing for complete flexibility on the client
-
-- Interested in using GraphQL more and learning more about the kinds of problems it solves in real-world scenarios
-</details>
-
----
-
-<!-- 
-Go over GraphQL implementation
-- how GraphQL works
-- Response has same shape as the request
-- Schema is contract between client and server
-- Each field corresponds with a resolver - will resolve the data for that field
-- Must manually resolve the fields for related models
-
-- On client
+<!-- - On client
   - Error handling for GraphQL requests
     - Implemented a custom error handling mechanism as
-    - an opportunity to more deeply understand error handling with GraphQL
+    - an opportunity to more deeply understand error handling with GraphQL -->
 
--->
 
-### Client App Organization
+
+### Client Organization
 
 <details>
 <summary>Learn More</summary>
@@ -182,7 +157,30 @@ useCreateWorkout() {
 
 ---
 
-### Server App Organization
+### Apollo GraphQL Server
+
+<details>
+  <summary>Learn More</summary>
+
+Set up a 5-model GraphQL API enabling complete flexibility in traversing of data on the client.
+- Allows for adding workout progress analysis features in the future, where complex data fetching would be required. For example, a feature could allow a user to see their progress on a per workout or per exercise basis.
+
+#### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/workout-app-erd.png)
+
+![Workout App ERD](./readme-assets/workout-app-erd.png)
+
+The client can specify the exact data it needs. Shown is a query requesting data for a workout, sessions associated with the workout, and users associated with each session. All recieved within a single request / response cycle.
+
+![GraphQL Request Response Example](./readme-assets/graphql-req-res.png)
+
+I found setting up the Apollo GraphQL server to be intuitive and a joy to work with. I find the prospect of complete data flexibility exciting. I'm interested in using GraphQL more and learning more about the problems it solves in the real-world.
+
+</details>
+
+---
+
+
+### Server Organization
 
 <details>
   <summary>Learn More</summary>
