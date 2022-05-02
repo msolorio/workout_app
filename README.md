@@ -252,13 +252,73 @@ return createWorkout
 ---
 
 ### TypeScript
-<!-- 
-Made me more conscious of how I was coding
 
-TODO: tighten typescript code
- -->
+<details>
+  <summary>Learn More</summary>
+
+The client is written entirely in TypeScript.
+
+#### Lessons Learned
+- Made me more aware of creating uniformity in my codebase
+- Helped me develop faster, catching subtle bugs early (often before they became bugs) and notifying me of function contracts.
+
+#### In-Progress
+- Currently converting the backend to TypeScript
+
+</details>
+
+---
 
 ### Docker
+Configured Dockerfiles for both the server and client and configured a single Docker Compose file for server, client, and database.
+
+#### Code Example
+```yml
+version: "3.9"
+services:
+  workoutdb:
+    image: postgres:latest
+    container_name: workoutdb
+    hostname: workoutdb
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: workout-app-dev
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  app:
+    container_name: app
+    build:
+      context: ./server
+      dockerfile: Dockerfile.dev
+    depends_on:
+      - workoutdb
+    ports:
+      - 4000:4000
+    volumes:
+      - ./server:/app
+    command: npm run init-dev
+
+  client:
+    container_name: client
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    ports:
+      - 3000:3000
+    environment:
+      REACT_APP_API_ENDPOINT: http://localhost:4000
+      FAST_REFRESH: false
+    volumes:
+      - ./client:/app
+
+
+volumes:
+  postgres-data:
+```
 
 ### JWT for Authentication
 
