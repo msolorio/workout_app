@@ -29,38 +29,46 @@ The app uses Apollo GraphQL for the API layer while maintaining a local data cac
 
 ## Tech of Note [WIP]
 
-<!-- ### Data Handling Strategy on the Client
+### Client Data Strategy
 
+<details>
+  <summary>Learn More</summary>
 
-Used Apollo GraphQL hooks for persistent data storage while maintaining a local cache via Redux
-  - Decreased load on the server by [xxx%]
-  - Enabled nearly instantaneous performance for data reads
+<br>
 
+Enabled persistent data storage with Apollo GraphQL hooks while maintaining a local cache of user's data via Redux.
+- Decreased load on the server by [xxx%].
+- Enabled nearly instantaneous performance for data reads.
+- Allows for optimistic updates as a future feature - updating user data and creating new records client-side without waiting for a response from the server.
 
+<br>
 
-Allows for implementing optimistic updates as a future feature
-- Updating user data and creating new records client-side before receiving a response from the server
+#### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/client-data-strategy.png)
 
-### Redux
-- Local cache of state
-- Improved performance for data fetching
-- Can allow for optimistic updates in the future
+![Workout app Architecture](./readme-assets/client-data-strategy.png)
+
 
 **Note:** Apollo GraphQL offers caching and one could say Redux was not necessary for this use case. I chose to implement Redux to practice coordinating the two data stores and to allow for optimistic updates as a future feature.
 
+</details>
+
+---
+
 ### Apollo GraphQL
-GraphQL enabled complete flexibility in requesting data on the client. However, this meant more work server side to resolve the data for the various fields.
 
+<details>
+  <summary>Learn More</summary>
 
+GraphQL enabled complete flexibility in requesting data on the client. However, this meant more work server side to resolve the data and enable this flexibility.
 
 - Greatly enjoyed setting up the GraphQL server.
   - Managing the complexity of related models
   - Allowing for complete flexibility on the client
 
+- Interested in using GraphQL more and learning more about the kinds of problems it solves in real-world scenarios
+</details>
 
-
-- Interested in using GraphQL more and learning more about the kinds of problems it solves in real-world scenarios -->
-
+---
 
 <!-- 
 Go over GraphQL implementation
@@ -77,7 +85,7 @@ Go over GraphQL implementation
 
 -->
 
-### App Organization - Client
+### Client App Organization
 
 <details>
 <summary>Learn More</summary>
@@ -174,12 +182,12 @@ useCreateWorkout() {
 
 ---
 
-### App Organization - Server
+### Server App Organization
 
 <details>
   <summary>Learn More</summary>
 
-Decoupled the GraphQL API layer from the data fetching layer allowing for easy repurposing of components. GraphQL could be switched out for a REST API, or the Prisma / Postgres model could be switched out to accomodate a different database.
+Decoupled the GraphQL API layer from data fetching layer allowing for easy repurposing of components. GraphQL could be switched out for a REST API, or the Prisma / Postgres model could be switched out to accomodate a different database.
 
 #### Code Example
 Below shows the resolver and model layer for creating a workout.
