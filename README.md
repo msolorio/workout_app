@@ -355,7 +355,11 @@ volumes:
 - Signiture is generated with the header and payload
   - verifies the JWT has not been tampered with
 
+Session data does not need to be stored on the server
+- Implementation is completely stateless 
+
 Security issues
+- Store in HTTPOnly cookie - inaccessible by JavaScript, XSS attacks
 - do not store sensitive data in the token
 - do not allow it to be valid longer than necessary
 
@@ -380,7 +384,8 @@ This is an ongoing project with critical and non-critical features still to be b
 - Gaurd against SQL injection for client inputs
 - Improve related prisma queries to increase performance
 - Implement optimistic updates for data mutations with Redux
-
+- More detailed error messaging
+  - If user's token is invalid, suggest they login again
 
 ## Future Implementations and Lessons Learned
 - **Use Deno instead of NodeJs** - for Native TypeScript support and better TypeScript tooling
