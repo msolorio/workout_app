@@ -27,6 +27,7 @@ services:
     command: npm run init-dev
     environment:
       DEVELOPMENT: true
+      CLIENT_ENDPOINT: http://localhost:3000
 
   client:
     container_name: client

@@ -29,7 +29,7 @@ The app uses Apollo GraphQL for the API layer while maintaining a local data cac
 
 ## Tech of Note [WIP]
 
-### Client Data Strategy
+### Data On the Client
 
 <details>
   <summary>Learn More</summary>
@@ -41,6 +41,8 @@ Configured server interaction with Apollo GraphQL while maintaining a local cach
 - Nearly instantaneous performance for data reads.
 - Allows for optimistic updates as a future feature - updating user data and creating new records client-side without waiting for a response from the server.
 
+**Note:** Apollo GraphQL offers caching and keeping a local cache in Redux was not entirely needed. I chose to implement Redux to practice coordinating the two data stores and to allow for optimistic updates as a future feature.
+
 <br>
 
 #### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/client-data-strategy.png)
@@ -48,13 +50,9 @@ Configured server interaction with Apollo GraphQL while maintaining a local cach
 ![Workout app Architecture](./readme-assets/client-data-strategy.png)
 
 
-**Note:** Apollo GraphQL offers caching and keeping a local cache in Redux was not entirely needed. I chose to implement Redux to practice coordinating the two data stores and to allow for optimistic updates as a future feature.
-
 </details>
 
 ---
-
-<br>
 
 <!-- - On client
   - Error handling for GraphQL requests
@@ -70,7 +68,7 @@ Configured server interaction with Apollo GraphQL while maintaining a local cach
 
 <br>
 
-Implemented separate abstractions for data interaction and component UI, mimicking MVC architecture. Container components manage high level coordination of page level tasks. Various model layers handled implementation details of working with data.
+Created separate abstractions for data and component UI, mimicking MVC architecture. Container components manage high level coordination of page tasks. Model layers handle implementation details of working with data.
 
 #### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/client-mvc.png)
 
@@ -133,8 +131,6 @@ function CreateWorkout(): JSX.Element {
 
 ---
 
-<br>
-
 `useCreateWorkout` method creates a workout with Apollo GraphQL, then stores in Redux. To integrate with Apollo hooks, I used hooks to manage model methods. The `useCreateWorkout` hook is called at the component's top level and returns a function that can be invoked in an event handler.
 
 [See full code - right click to open in new tab](https://github.com/msolorio/workout_app_client/blob/main/src/model/resources/Workout/index.ts)
@@ -164,8 +160,6 @@ useCreateWorkout() {
 
 ---
 
-<br>
-
 ### Apollo GraphQL Server
 
 <details>
@@ -173,8 +167,8 @@ useCreateWorkout() {
 
 <br>
 
-Set up 5-model GraphQL API and enabling flexibility in traversing of data for the client.
-- In the future I could add workout progress analysis features, where complex data fetching would be required. For example, a feature could allow a user to see their progress overall or on a per workout or per exercise basis.
+Set up 5-model GraphQL API and enabling flexibility in traversing of data.
+- In the future I could add workout progress analysis features, where complex data fetching would be required. For example, a feature could allow a user to see their progress overall, per workout, or per exercise.
 
 #### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/workout-app-erd.png)
 
@@ -187,13 +181,11 @@ The client can specify the exact data it needs.
 #### Code Example
 [Check out the resolvers dir for the GraphQL implementation - right click to open in new tab](https://github.com/msolorio/workout_app_server/tree/main/src/resolvers)
 
-Building the Apollo GraphQL server was intuitive and a joy to work with and it is exciting to enable complete data flexibility. I'm interested in using GraphQL more and learning about the problems it solves in the real-world.
+Building the Apollo GraphQL server was intuitive and a joy, and it is exciting to enable complete data flexibility. I'm interested in using GraphQL more and learning about the problems it solves in the real-world.
 
 </details>
 
 ---
-
-<br>
 
 ### Server Organization
 
@@ -202,10 +194,10 @@ Building the Apollo GraphQL server was intuitive and a joy to work with and it i
 
 <br>
 
-Decoupled the GraphQL API layer from data fetching layer allowing for easy repurposing of components. GraphQL could be switched out for a REST API, or the Prisma / Postgres model could be switched out to accomodate a different database.
+Decoupled the GraphQL API layer from data fetching layer allowing for easy repurposing of components. GraphQL could be switched out for a REST API, or the Prisma / Postgres model could be switched to accomodate a different database.
 
 #### Code Example
-Below shows the resolver and model layer for creating a workout.
+Shown is the resolver and model layer for creating a workout.
 
 **Note:** In the model, closure is used to wrap the model method and grant it error handling with `createHandledQuery`.
 
@@ -268,8 +260,6 @@ return createWorkout
 
 ---
 
-<br>
-
 ### TypeScript
 
 <details>
@@ -290,8 +280,6 @@ The client is written entirely in TypeScript.
 
 ---
 
-<br>
-
 ### Docker
 
 <details>
@@ -299,7 +287,7 @@ The client is written entirely in TypeScript.
 
   <br>
 
-Configured Dockerfiles for both the server and client and configured a single Docker Compose file for server, client, and database.
+Configured Dockerfiles for both server and client and configured a single Docker Compose file for server, client, and database.
 
 [See full code - right click to open in new tab](https://github.com/msolorio/workout_app/blob/main/docker-compose.yml)
 
@@ -353,8 +341,6 @@ volumes:
 </details>
 
 ---
-
-<br>
 
 ### JWT for Authentication
 
