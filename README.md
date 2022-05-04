@@ -353,3 +353,4 @@ This is an ongoing project with critical and non-critical features still to be b
 ## Future Implementations and Lessons Learned
 - **Use Deno instead of NodeJs** - for Native TypeScript support and better TypeScript tooling
 - **Use ES Modules on server** - allow importing of TypeScript interfaces
+- **Use non-hook GraphQL queries/mutations** - simplify model methods
