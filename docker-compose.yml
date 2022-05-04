@@ -25,6 +25,8 @@ services:
     volumes:
       - ./server:/app
     command: npm run init-dev
+    environment:
+      DEVELOPMENT: true
 
   client:
     container_name: client

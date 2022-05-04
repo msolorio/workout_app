@@ -36,9 +36,9 @@ The app uses Apollo GraphQL for the API layer while maintaining a local data cac
 
 <br>
 
-Enabled persistent data storage with Apollo GraphQL hooks while maintaining a local cache of user's data via Redux.
-- Decreased load on the server by [xxx%].
-- Enabled nearly instantaneous performance for data reads.
+Configured server interaction with Apollo GraphQL while maintaining a local cache of user's data via Redux.
+- Decreased load on the server by 200%.
+- Nearly instantaneous performance for data reads.
 - Allows for optimistic updates as a future feature - updating user data and creating new records client-side without waiting for a response from the server.
 
 <br>
@@ -48,11 +48,14 @@ Enabled persistent data storage with Apollo GraphQL hooks while maintaining a lo
 ![Workout app Architecture](./readme-assets/client-data-strategy.png)
 
 
-**Note:** Apollo GraphQL offers caching and one could say Redux was not necessary for this use case. I chose to implement Redux to practice coordinating the two data stores and to allow for optimistic updates as a future feature.
+**Note:** Apollo GraphQL offers caching and keeping a local cache in Redux was not entirely needed. I chose to implement Redux to practice coordinating the two data stores and to allow for optimistic updates as a future feature.
 
 </details>
 
 ---
+
+<br>
+
 <!-- - On client
   - Error handling for GraphQL requests
     - Implemented a custom error handling mechanism as
@@ -67,40 +70,40 @@ Enabled persistent data storage with Apollo GraphQL hooks while maintaining a lo
 
 <br>
 
-Implemented separate layers for data interaction and component UI, mimicking MVC architecture. Container components managed high level coordination of page level tasks. Various model layers oversaw implementation details of working with data.
+Implemented separate abstractions for data interaction and component UI, mimicking MVC architecture. Container components manage high level coordination of page level tasks. Various model layers handled implementation details of working with data.
 
 #### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/client-mvc.png)
 
 ![MVC architecture on the client](./readme-assets/client-mvc.png)
 
-#### Models - Redux and GraphQL Models
-- For abstracting away vendor specific code for Apollo GraphQL and Redux
-- Housing client-side error handling for GraphQL queries and mutations
+#### Redux and GraphQL Models
+- Abstracts away vendor specific code for Apollo GraphQL and Redux
+- Houses client-side error handling for GraphQL queries and mutations
 - Uses React Hooks
 
-#### Models - Client Operations Models
-- For managing implementation details of communication between GraphQL and Redux
-- Presenting high level operations to the controllers
+#### Client Operations Models
+- Manages implementation details of communication between GraphQL and Redux
+- Presents high level operations to the controllers
 - Uses React Hooks
 
 #### Container Components (Controllers)
-- Retrieving data from the URL
-- Calling model methods for setting and retrieving data
-- Managing local component state
-- Handling events
-- Handling redirects
-- Pulling in UI and passing data
+- Retrieves data from the URL
+- Calls model methods for setting and retrieving data
+- Manages local component state
+- Handles events
+- Handles redirects
+- Pulls in UI and passing data
 
 #### Presentation Components (View)
-- Presenting data and styled UI
+- Presents the data and styled UI
 
 <br>
 
-#### Code Example - Right click to open in new tab
+#### Code Example
 
 The CreateWorkout container
 
-[See full code](https://github.com/msolorio/workout_app_client/blob/main/src/pages/ShowWorkout/index.tsx)
+[See full code - right click to open in new tab](https://github.com/msolorio/workout_app_client/blob/main/src/pages/ShowWorkout/index.tsx)
 ```typescript
 function CreateWorkout(): JSX.Element {
   const createWorkout = model.Workout.useCreateWorkout()
@@ -128,9 +131,13 @@ function CreateWorkout(): JSX.Element {
 }
 ```
 
+---
+
+<br>
+
 `useCreateWorkout` method creates a workout with Apollo GraphQL, then stores in Redux. To integrate with Apollo hooks, I used hooks to manage model methods. The `useCreateWorkout` hook is called at the component's top level and returns a function that can be invoked in an event handler.
 
-[See full code](https://github.com/msolorio/workout_app_client/blob/main/src/model/resources/Workout/index.ts)
+[See full code - right click to open in new tab](https://github.com/msolorio/workout_app_client/blob/main/src/model/resources/Workout/index.ts)
 
 ```typescript
 ...
@@ -157,33 +164,43 @@ useCreateWorkout() {
 
 ---
 
+<br>
+
 ### Apollo GraphQL Server
 
 <details>
   <summary>Learn More</summary>
 
-Set up a 5-model GraphQL API enabling complete flexibility in traversing of data on the client.
-- Allows for adding workout progress analysis features in the future, where complex data fetching would be required. For example, a feature could allow a user to see their progress on a per workout or per exercise basis.
+<br>
+
+Set up 5-model GraphQL API and enabling flexibility in traversing of data for the client.
+- In the future I could add workout progress analysis features, where complex data fetching would be required. For example, a feature could allow a user to see their progress overall or on a per workout or per exercise basis.
 
 #### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/workout-app-erd.png)
 
 ![Workout App ERD](./readme-assets/workout-app-erd.png)
 
-The client can specify the exact data it needs. Shown is a query requesting data for a workout, sessions associated with the workout, and users associated with each session. All recieved within a single request / response cycle.
+The client can specify the exact data it needs.
 
-![GraphQL Request Response Example](./readme-assets/graphql-req-res.png)
+![GraphQL Request Response Example](./readme-assets/graph-ql.png)
 
-I found setting up the Apollo GraphQL server to be intuitive and a joy to work with. I find the prospect of complete data flexibility exciting. I'm interested in using GraphQL more and learning more about the problems it solves in the real-world.
+#### Code Example
+[Check out the resolvers dir for the GraphQL implementation - right click to open in new tab](https://github.com/msolorio/workout_app_server/tree/main/src/resolvers)
+
+Building the Apollo GraphQL server was intuitive and a joy to work with and it is exciting to enable complete data flexibility. I'm interested in using GraphQL more and learning about the problems it solves in the real-world.
 
 </details>
 
 ---
 
+<br>
 
 ### Server Organization
 
 <details>
   <summary>Learn More</summary>
+
+<br>
 
 Decoupled the GraphQL API layer from data fetching layer allowing for easy repurposing of components. GraphQL could be switched out for a REST API, or the Prisma / Postgres model could be switched out to accomodate a different database.
 
@@ -251,16 +268,20 @@ return createWorkout
 
 ---
 
+<br>
+
 ### TypeScript
 
 <details>
   <summary>Learn More</summary>
 
+<br>
+
 The client is written entirely in TypeScript.
 
 #### Lessons Learned
-- Made me more aware of creating uniformity in my codebase
-- Helped me develop faster, catching subtle bugs early (often before they became bugs) and notifying me of function contracts.
+- Became more aware of creating uniformity and a clear type strategy for my codebase
+- Developed faster, catching subtle bugs early (often before they became bugs)
 
 #### In-Progress
 - Currently converting the backend to TypeScript
@@ -269,8 +290,18 @@ The client is written entirely in TypeScript.
 
 ---
 
+<br>
+
 ### Docker
+
+<details>
+  <summary>Learn More</summary>
+
+  <br>
+
 Configured Dockerfiles for both the server and client and configured a single Docker Compose file for server, client, and database.
+
+[See full code - right click to open in new tab](https://github.com/msolorio/workout_app/blob/main/docker-compose.yml)
 
 #### Code Example
 ```yml
@@ -319,8 +350,18 @@ services:
 volumes:
   postgres-data:
 ```
+</details>
+
+---
+
+<br>
 
 ### JWT for Authentication
+
+<details>
+  <summary>Learn More</summary>
+
+  <br>
 
 <!-- 
 - A standard for securely transmitting information between parties
@@ -334,18 +375,23 @@ Security issues
 
  -->
 
+</details>
+
+---
+
+<br>
+
 ### Error Handling
 
 ---
 
-## In-Progress
-- Converting backend to TypeScript
+<br>
 
 ## TODO Items
 This is an ongoing project with critical and non-critical features still to be built.
-- Completely convert the backend to TypeScript
-- Gaurd against cross-site scripting for all client inputs
-- Gaurd against SQL injection for all client inputs
+- Convert backend to TypeScript
+- Gaurd against cross-site scripting for client inputs
+- Gaurd against SQL injection for client inputs
 - Improve related prisma queries to increase performance
 - Implement optimistic updates for data mutations with Redux
 
