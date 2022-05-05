@@ -10,16 +10,18 @@ The app uses Apollo GraphQL for the API layer while maintaining a local data cac
 
 ### [Server](https://github.com/msolorio/workout-app)
 - Node
-- GraphQL / Apollo
+- Apollo GraphQL
 - Prisma ORM
 - PostgreSQL
+- JWT
 
 ### [Client](https://github.com/msolorio/workout-app-client)
 
 - TypeScript
 - React
-- Redux - Redux toolkit
-- GraphQL / Apollo
+- Apollo GraphQL
+- Redux / Redux Toolkit
+- React Router
 
 #### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/workout-app-architecture.png)
 
@@ -36,18 +38,16 @@ The app uses Apollo GraphQL for the API layer while maintaining a local data cac
 
 <br>
 
-Handled data persistence with Apollo GraphQL and maintained a local cache of user data in Redux for data reads.
+Handled data persistence with Apollo GraphQL and kept a local cache of user data with Redux.
 - Nearly instantaneous performance for data reads.
 - Decreased load on the server based on app use.
-
-<br>
 
 #### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/client-data-strategy.png)
 
 ![Workout app Architecture](./readme-assets/client-data-strategy.png)
 
 ### Reflections and Future Features
-A Redux cache was a good fit here. Users read only their own data removing the risk of being out of sync with the DB. For the future, I would like to add a social component using Redis for caching shared data among users.
+A Redux cache worked well here. Users read only their own data removing the risk of being out of sync with the DB. In the future, I would like to add a social component using Redis for caching shared data among users.
 
 Apollo GraphQL offers caching and keeping a Redux cache was not needed. I chose to use Redux to practice coordinating the two data stores and allow for optimistic updates in the future.
 
@@ -63,10 +63,8 @@ Apollo GraphQL offers caching and keeping a Redux cache was not needed. I chose 
 <br>
 
 Created separate abstractions for data and component UI, mimicking MVC.
-- **Container components** - manage high-level coordination of page tasks.
-- **Model layers** - handle implementation details of working with data.
-
-<br>
+- **Container components / Controllers** - manage high-level coordination of page tasks.
+- **Model layers** - handle implementation details of fetching, setting, and manipulating data.
 
 #### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/client-mvc.png)
 
@@ -79,7 +77,7 @@ Created separate abstractions for data and component UI, mimicking MVC.
 
 #### Client Operations Models
 - Manages implementation details of communicating between GraphQL and Redux
-- Presents high level operations to the controllers
+- Presents high-level operations to the controllers
 - Uses React Hooks
 
 #### Container Components (Controllers)
@@ -95,9 +93,7 @@ Created separate abstractions for data and component UI, mimicking MVC.
 
 <br>
 
-#### Code Example
-
-#### Create Workout container component / controller
+### Code Example - Create Workout Container Component
 
 [See full code - right click to open in new tab](https://github.com/msolorio/workout_app_client/blob/main/src/pages/ShowWorkout/index.tsx)
 ```typescript
@@ -128,7 +124,7 @@ function CreateWorkout(): JSX.Element {
 ```
 
 ---
-#### Create Workout model method
+### Code Example - Create Workout Model
 `useCreateWorkout` creates a workout with Apollo GraphQL and stores in Redux. Hooks are used to manage model methods. In this case the hook returns a method to be invoked in an event handler.
 
 [See full code - right click to open in new tab](https://github.com/msolorio/workout_app_client/blob/main/src/model/resources/Workout/index.ts)
@@ -172,8 +168,6 @@ useCreateWorkout() {
   - Cookie is passed via HTTPS.
   - Cookie and token are short-lived, valid for only 24 hours.
 
-  <br>
-
 #### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/auth-jwt.png)
 
 ![Auth with JWTs and HttpOnly Cookies](./readme-assets/auth-jwt.png)
@@ -190,8 +184,6 @@ useCreateWorkout() {
 <br>
 
 Set up 5-model GraphQL API, enabling flexibility in traversing of data.
-
-<br>
 
 #### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/workout-app-erd.png)
 
@@ -225,14 +217,12 @@ Decoupled the GraphQL API layer from data fetching layer.
 - GraphQL could be switched out for a REST API.
 - Prisma / Postgres model could be switched to accomodate a different database.
 
-<br>
 
 #### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/server-org.png)
 
 ![Workout App ERD](./readme-assets/server-org.png)
 
 #### Code Example
-
 
 The Model method for creating a workout
 - Abstracts away vendor specific code for Prisma.
