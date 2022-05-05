@@ -2,8 +2,6 @@
 
 A full stack app for users to create and track their gym workouts.
 
-The app uses Apollo GraphQL for the API layer while maintaining a local data cache via Redux.
-
 ---
 
 ## Tech Used
@@ -193,7 +191,7 @@ The client specifies the exact data it needs.
 
 ![GraphQL Request Response Example](./readme-assets/graph-ql.png)
 
-#### Code Example
+### Code Example
 [Check out the resolvers dir for the GraphQL implementation - right click to open in new tab](https://github.com/msolorio/workout_app_server/tree/main/src/resolvers)
 
 ### Reflections and Future Features
@@ -222,7 +220,7 @@ Decoupled the GraphQL API layer from data fetching layer.
 
 ![Workout App ERD](./readme-assets/server-org.png)
 
-#### Code Example
+### Code Example
 
 The Model method for creating a workout
 - Abstracts away vendor specific code for Prisma.
@@ -283,11 +281,11 @@ return createWorkout
 
 The client is written entirely in TypeScript.
 
-#### Lessons Learned
+### Lessons Learned
 - Became more aware of creating uniformity and a clear type strategy for my codebase.
 - Developed faster, catching subtle bugs early (often before they became bugs).
 
-#### In-Progress
+### In-Progress
 - Currently converting the backend to TypeScript.
 
 </details>
@@ -304,7 +302,7 @@ The client is written entirely in TypeScript.
 Configured Dockerfiles for both server and client and configured a single Docker Compose file for server, client, and database.
 
 
-#### Code Example
+### Code Example
 
 [See full code - right click to open in new tab](https://github.com/msolorio/workout_app/blob/main/docker-compose.yml)
 
@@ -364,7 +362,7 @@ volumes:
 
 <br>
 
-## TODO Items
+## Todo Items
 This is an ongoing project with critical and non-critical features still to be built.
 - Move unprotected routes to the Express server. Completely deny access to Apollo server for unauthenticated requests.
 - Sanitize client inputs for XSS.
