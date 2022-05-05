@@ -36,9 +36,9 @@ The app uses Apollo GraphQL for the API layer while maintaining a local data cac
 
 <br>
 
-Handled data persistence with Apollo GraphQL and maintained a local cache of user's data with Redux for data reads.
+Handled data persistence with Apollo GraphQL and maintained a local cache of user data in Redux for data reads.
 - Nearly instantaneous performance for data reads.
-- Decreased load on the server.
+- Decreased load on the server based on app use.
 
 <br>
 
@@ -46,7 +46,10 @@ Handled data persistence with Apollo GraphQL and maintained a local cache of use
 
 ![Workout app Architecture](./readme-assets/client-data-strategy.png)
 
-Relying on Redux for data reads was a good fit for this app. User's read their own data and do not interact with other users. For future implementations, I would like to add a social component and use Redis for strategically caching shared data among users.
+### Reflections
+A Redux cache was a good fit for this app. Users read only their own data removing the risk of being out of sync. For the future, I would like to add a social component using Redis for caching shared data among users.
+
+Apollo GraphQL offers caching and keeping a Redux cache was not needed. I chose to use Redux to practice coordinating the two data stores and allow for optimistic updates in the future.
 
 </details>
 
@@ -59,7 +62,9 @@ Relying on Redux for data reads was a good fit for this app. User's read their o
 
 <br>
 
-Created separate abstractions for data and component UI, mimicking MVC architecture. Container components manage high level coordination of page tasks. Model layers handle implementation details of working with data.
+Created separate abstractions for data and component UI, mimicking MVC.
+- **Container components** - manage high-level coordination of page tasks.
+- **Model layers** - handle implementation details of working with data.
 
 <br>
 
@@ -69,21 +74,21 @@ Created separate abstractions for data and component UI, mimicking MVC architect
 
 #### Redux and GraphQL Models
 - Abstracts away vendor specific code for Apollo GraphQL and Redux
-- Houses client-side error handling for GraphQL queries and mutations
+- Houses client-side error handling for Apollo GraphQL
 - Uses React Hooks
 
 #### Client Operations Models
-- Manages implementation details of communication between GraphQL and Redux
+- Manages implementation details of communicating between GraphQL and Redux
 - Presents high level operations to the controllers
 - Uses React Hooks
 
 #### Container Components (Controllers)
-- Retrieves data from the URL
+- Retrieves data from URL
 - Calls model methods for setting and retrieving data
 - Manages local component state
 - Handles events
 - Handles redirects
-- Pulls in UI and passing data
+- Pulls in UI and passes data
 
 #### Presentation Components (View)
 - Presents the data and styled UI
@@ -92,7 +97,7 @@ Created separate abstractions for data and component UI, mimicking MVC architect
 
 #### Code Example
 
-The CreateWorkout container
+#### Create Workout container component / controller
 
 [See full code - right click to open in new tab](https://github.com/msolorio/workout_app_client/blob/main/src/pages/ShowWorkout/index.tsx)
 ```typescript
@@ -123,8 +128,8 @@ function CreateWorkout(): JSX.Element {
 ```
 
 ---
-
-`useCreateWorkout` method creates a workout with Apollo GraphQL, then stores in Redux. To integrate with Apollo hooks, I used hooks to manage model methods. The `useCreateWorkout` hook is called at the component's top level and returns a function that can be invoked in an event handler.
+#### Create Workout model method
+`useCreateWorkout` creates a workout with Apollo GraphQL and stores in Redux. Hooks are used to manage model methods. In this case the hook returns a method to be invoked in an event handler.
 
 [See full code - right click to open in new tab](https://github.com/msolorio/workout_app_client/blob/main/src/model/resources/Workout/index.ts)
 
@@ -153,15 +158,13 @@ useCreateWorkout() {
 
 ---
 
-### JWT for Authentication
+### Authentication with JWTs
 
 <details>
   <summary>Learn More</summary>
 
 Configured authentication with JWTs and HttpOnly Cookies.
-
-Security Considerations
-- Gaurded against XSS from accessing token. HttpOnly cookies are inaccessible with JavaScript.
+- Gaurded against XSS from accessing token.
 - Enabled stateless authentication with JWTs, eliminating the need to store session data server-side.
 - Revokes the HttpOnly cookie server-side upon logout.
 - Cookie is passed via HTTPS.
@@ -185,7 +188,7 @@ Security Considerations
 <br>
 
 Set up 5-model GraphQL API and enabling flexibility in traversing of data.
-- In the future I could add workout progress analysis features, where complex data fetching would be required. For example, a feature could allow a user to see their progress overall, per workout, or per exercise.
+- In the future I could add workout progress analysis features, where complex data fetching would be required. A feature could allow a user to see their progress overall, per workout, or per exercise.
 
 <br>
 
@@ -193,7 +196,7 @@ Set up 5-model GraphQL API and enabling flexibility in traversing of data.
 
 ![Workout App ERD](./readme-assets/workout-app-erd.png)
 
-The client can specify the exact data it needs.
+The client specifies the exact data it needs.
 
 ![GraphQL Request Response Example](./readme-assets/graph-ql.png)
 
@@ -213,10 +216,10 @@ Building the Apollo GraphQL server was intuitive and a joy, and it is exciting t
 
 <br>
 
-Decoupled the GraphQL API layer from data fetching layer allowing for easy repurposing of components. GraphQL could be switched out for a REST API, or the Prisma / Postgres model could be switched to accomodate a different database.
-
-#### Models
-
+Decoupled the GraphQL API layer from data fetching layer
+- Allowing for easy repurposing of components.
+- GraphQL could be switched out for a REST API.
+- Prisma / Postgres model could be switched to accomodate a different database.
 
 <br>
 
@@ -226,28 +229,9 @@ Decoupled the GraphQL API layer from data fetching layer allowing for easy repur
 
 #### Code Example
 
-#### The GraphQL resolver for creating a workout
-- Retrieves data from URL
-- Calls model methods
-- handles return value
-```js
-...
-  createWorkout: async (parent, args, context) => {
-    const modelArgs = {
-      ...args,
-      userId: context.userId
-    }
-
-    const { createdWorkout } = await Workout.createWorkout(modelArgs)
-
-    return createdWorkout
-  },
-...
-```
-
-#### The Model method for creating a workout
-- Abstracts away vendor specific code for Prisma
-- Manages multiple DB queries involved with fullfilling single request
+The Model method for creating a workout
+- Abstracts away vendor specific code for Prisma.
+- Manages multiple DB interactions involved with fullfilling single mutation.
 
 **Note:** A closure wraps the model method and grant it error handling with `createHandledQuery`.
 ```js
@@ -392,6 +376,3 @@ This is an ongoing project with critical and non-critical features still to be b
 - **Use ES Modules on server** - allow importing of TypeScript interfaces
 - **Use non-hook GraphQL queries/mutations on client** - simplify tiered model methods
 - **Add a social component to the app** - allow users to share workouts, message one another, and find users based on location. Would use WebSockets for real-time and Redis for strategically caching shared user data.
-
-## Notes
-Apollo GraphQL offers caching and keeping a local cache in Redux was not entirely needed. I chose to implement Redux to practice coordinating the two data stores and to allow for optimistic updates as a future feature. With optimistic updates a user would create/update records client-side without waiting for server response.
