@@ -347,7 +347,21 @@ volumes:
 <details>
   <summary>Learn More</summary>
 
+Configured authentication with JWTs and HttpOnly Cookies.
+
+Security Considerations
+- Gaurded against XSS from accessing token. HttpOnly cookies are inaccessible with JavaScript.
+- Enabled stateless authentication with JWTs, eliminating the need to store session data server-side.
+- Revokes the HttpOnly cookie server-side upon logout.
+- Cookie is passed via HTTPS.
+- Cookie and token are short-lived, valid for only 24 hours.
+
   <br>
+
+#### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/auth-jwt.png)
+
+![Auth with JWTs and HttpOnly Cookies](./readme-assets/auth-jwt.png)
+
 
 <!-- 
 - A standard for securely transmitting information between parties
@@ -358,10 +372,19 @@ volumes:
 Session data does not need to be stored on the server
 - Implementation is completely stateless 
 
+- token expires in 24 hours
+
 Security issues
-- Store in HTTPOnly cookie - inaccessible by JavaScript, XSS attacks
+- Store in HttpOnly cookie - inaccessible by JavaScript, XSS attacks
+- Cookie and token expires in 24 hours
+- revokes the HttpOnly cookie serverside when user logs out
+- Uses HTTPS for app
+
 - do not store sensitive data in the token
 - do not allow it to be valid longer than necessary
+
+Future
+- sanitize user inputs
 
  -->
 
@@ -371,23 +394,16 @@ Security issues
 
 <br>
 
-### Error Handling
-
----
-
-<br>
-
 ## TODO Items
 This is an ongoing project with critical and non-critical features still to be built.
-- Convert backend to TypeScript
-- Gaurd against cross-site scripting for client inputs
-- Gaurd against SQL injection for client inputs
-- Improve related prisma queries to increase performance
-- Implement optimistic updates for data mutations with Redux
-- More detailed error messaging
-  - If user's token is invalid, suggest they login again
+- Move unprotected routes to the Express server. Completely deny access to Apollo server for unauthenticated requests.
+- Sanitize client inputs for XSS attacks.
+- Sanitize client inputs for SQL-injection attacks.
+- Improve related prisma queries for increased performance.
+- Implement optimistic updates for data mutations with Redux.
+- Convert backend to TypeScript.
 
 ## Future Implementations and Lessons Learned
 - **Use Deno instead of NodeJs** - for Native TypeScript support and better TypeScript tooling
 - **Use ES Modules on server** - allow importing of TypeScript interfaces
-- **Use non-hook GraphQL queries/mutations** - simplify model methods
+- **Use non-hook GraphQL queries/mutations on client** - simplify model methods
