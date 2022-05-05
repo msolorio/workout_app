@@ -6,7 +6,7 @@ The app uses Apollo GraphQL for the API layer while maintaining a local data cac
 
 ---
 
-#### Tech Used
+## Tech Used
 
 ### [Server](https://github.com/msolorio/workout-app)
 - Node
@@ -27,7 +27,7 @@ The app uses Apollo GraphQL for the API layer while maintaining a local data cac
 
 ---
 
-## Tech of Note [WIP]
+## Tech of Note
 
 ### Data On the Client
 
@@ -46,8 +46,8 @@ Handled data persistence with Apollo GraphQL and maintained a local cache of use
 
 ![Workout app Architecture](./readme-assets/client-data-strategy.png)
 
-### Reflections
-A Redux cache was a good fit for this app. Users read only their own data removing the risk of being out of sync. For the future, I would like to add a social component using Redis for caching shared data among users.
+### Reflections and Future Features
+A Redux cache was a good fit here. Users read only their own data removing the risk of being out of sync with the DB. For the future, I would like to add a social component using Redis for caching shared data among users.
 
 Apollo GraphQL offers caching and keeping a Redux cache was not needed. I chose to use Redux to practice coordinating the two data stores and allow for optimistic updates in the future.
 
@@ -163,12 +163,14 @@ useCreateWorkout() {
 <details>
   <summary>Learn More</summary>
 
-Configured authentication with JWTs and HttpOnly Cookies.
-- Gaurded against XSS from accessing token.
-- Enabled stateless authentication with JWTs, eliminating the need to store session data server-side.
-- Revokes the HttpOnly cookie server-side upon logout.
-- Cookie is passed via HTTPS.
-- Cookie and token are short-lived, valid for only 24 hours.
+  <br>
+
+  Configured authentication with JWTs and HttpOnly Cookies.
+  - Gaurded against XSS from accessing token.
+  - Enabled stateless authentication with JWTs, eliminating the need to store session data server-side.
+  - Revokes the HttpOnly cookie server-side upon logout.
+  - Cookie is passed via HTTPS.
+  - Cookie and token are short-lived, valid for only 24 hours.
 
   <br>
 
@@ -187,8 +189,7 @@ Configured authentication with JWTs and HttpOnly Cookies.
 
 <br>
 
-Set up 5-model GraphQL API and enabling flexibility in traversing of data.
-- In the future I could add workout progress analysis features, where complex data fetching would be required. A feature could allow a user to see their progress overall, per workout, or per exercise.
+Set up 5-model GraphQL API, enabling flexibility in traversing of data.
 
 <br>
 
@@ -203,7 +204,10 @@ The client specifies the exact data it needs.
 #### Code Example
 [Check out the resolvers dir for the GraphQL implementation - right click to open in new tab](https://github.com/msolorio/workout_app_server/tree/main/src/resolvers)
 
-Building the Apollo GraphQL server was intuitive and a joy, and it is exciting to enable complete data flexibility. I'm interested in using GraphQL more and learning about the problems it solves in the real-world.
+### Reflections and Future Features
+Building the Apollo GraphQL server was intuitive and a joy. It is exciting to enable complete data flexibility. I'm interested in using GraphQL more and learning about the problems it solves in the real-world.
+
+In the future I could add workout progress analysis features, where complex data fetching would be required. A feature could allow a user to see their progress overall, per workout, or per exercise.
 
 </details>
 
@@ -216,7 +220,7 @@ Building the Apollo GraphQL server was intuitive and a joy, and it is exciting t
 
 <br>
 
-Decoupled the GraphQL API layer from data fetching layer
+Decoupled the GraphQL API layer from data fetching layer.
 - Allowing for easy repurposing of components.
 - GraphQL could be switched out for a REST API.
 - Prisma / Postgres model could be switched to accomodate a different database.
@@ -229,11 +233,13 @@ Decoupled the GraphQL API layer from data fetching layer
 
 #### Code Example
 
+
 The Model method for creating a workout
 - Abstracts away vendor specific code for Prisma.
 - Manages multiple DB interactions involved with fullfilling single mutation.
+- Closure wraps the model method and grant it error handling with `createHandledQuery`.
 
-**Note:** A closure wraps the model method and grant it error handling with `createHandledQuery`.
+[See full code - right click to open in new tab](https://github.com/msolorio/workout_app_server/blob/main/src/model/Workout/methods/createWorkout.js)
 ```js
 ...
 async function query({
@@ -288,11 +294,11 @@ return createWorkout
 The client is written entirely in TypeScript.
 
 #### Lessons Learned
-- Became more aware of creating uniformity and a clear type strategy for my codebase
-- Developed faster, catching subtle bugs early (often before they became bugs)
+- Became more aware of creating uniformity and a clear type strategy for my codebase.
+- Developed faster, catching subtle bugs early (often before they became bugs).
 
 #### In-Progress
-- Currently converting the backend to TypeScript
+- Currently converting the backend to TypeScript.
 
 </details>
 
@@ -307,9 +313,11 @@ The client is written entirely in TypeScript.
 
 Configured Dockerfiles for both server and client and configured a single Docker Compose file for server, client, and database.
 
-[See full code - right click to open in new tab](https://github.com/msolorio/workout_app/blob/main/docker-compose.yml)
 
 #### Code Example
+
+[See full code - right click to open in new tab](https://github.com/msolorio/workout_app/blob/main/docker-compose.yml)
+
 ```yml
 version: "3.9"
 services:
@@ -338,6 +346,9 @@ services:
     volumes:
       - ./server:/app
     command: npm run init-dev
+    environment:
+      DEVELOPMENT: true
+      CLIENT_ENDPOINT: http://localhost:3000
 
   client:
     container_name: client
@@ -355,6 +366,7 @@ services:
 
 volumes:
   postgres-data:
+
 ```
 </details>
 
@@ -365,14 +377,16 @@ volumes:
 ## TODO Items
 This is an ongoing project with critical and non-critical features still to be built.
 - Move unprotected routes to the Express server. Completely deny access to Apollo server for unauthenticated requests.
-- Sanitize client inputs for XSS attacks.
-- Sanitize client inputs for SQL-injection attacks.
+- Sanitize client inputs for XSS.
+- Sanitize client inputs for SQL-injection.
 - Improve related prisma queries for increased performance.
-- Implement optimistic updates for data mutations with Redux.
+- Implement optimistic updates for data writes with Redux.
 - Convert backend to TypeScript.
 
 ## Future Implementations and Lessons Learned
-- **Use Deno in place of NodeJs** - for Native TypeScript support and better TypeScript tooling
-- **Use ES Modules on server** - allow importing of TypeScript interfaces
-- **Use non-hook GraphQL queries/mutations on client** - simplify tiered model methods
-- **Add a social component to the app** - allow users to share workouts, message one another, and find users based on location. Would use WebSockets for real-time and Redis for strategically caching shared user data.
+- **Use Deno on server** - for Native TypeScript support and better TypeScript tooling.
+- **Use ES Modules on server** - allow importing of TypeScript interfaces.
+- **Use non-hook GraphQL queries/mutations on client** - simplify tiered model methods.
+- **Add a social component** - allow users to share workouts, message one another, and find users based on location. Would use WebSockets for real-time and Redis for strategic caching of shared user data.
+- **Add image upload with Amazon S3** - allow users to upload multiple images for a workout session.
+- **Add CDN with CloudFront** - for improved performance for delivering frontend assets.
