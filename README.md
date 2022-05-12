@@ -372,7 +372,9 @@ This is an ongoing project with critical and non-critical features still to be b
 - Improve related prisma queries for increased performance.
 - Implement optimistic updates for data writes with Redux.
 - Convert backend to TypeScript.
+- Currently running into a bug where unable to disable Apollo caching for certain key queries.
 
+  
 ## Future Implementations and Lessons Learned
 - **Use Deno on server** - for Native TypeScript support and better TypeScript tooling.
 - **Use ES Modules on server** - allow importing of TypeScript interfaces.
