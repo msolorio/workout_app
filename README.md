@@ -1,5 +1,7 @@
 # Workout App
 
+https://gymbuddie.netlify.app/
+
 A full stack app for users to create and track their gym workouts.
 
 ---
