@@ -4,6 +4,16 @@ https://gymbuddie.netlify.app/
 
 A full stack app for users to create and track their gym workouts.
 
+<!-- 
+TODO:
+- Add more images to readme
+- Add tech icons for technologies
+-->
+
+<!--
+TODO: Screenshots of app here
+-->
+
 ---
 
 ## Tech Used
@@ -31,7 +41,7 @@ A full stack app for users to create and track their gym workouts.
 
 ## Tech of Note
 
-### Data On the Client
+### Client Caching Strategy
 
 <details>
   <summary>Learn More</summary>
@@ -42,6 +52,8 @@ Handled data persistence with Apollo GraphQL and kept a local cache of user data
 - Nearly instantaneous performance for data reads.
 - Decreased load on the server based on app use.
 
+Apollo GraphQL offers its own robust caching features. I chose to use Redux to practice coordinating two data stores and allow for optimistic updates in the future.
+
 #### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/client-data-strategy.png)
 
 ![Workout app Architecture](./readme-assets/client-data-strategy.png)
@@ -49,7 +61,6 @@ Handled data persistence with Apollo GraphQL and kept a local cache of user data
 ### Reflections and Future Features
 A Redux cache worked well here. Users read only their own data removing the risk of being out of sync with the DB. In the future, I would like to add a social component using Redis for caching shared data among users.
 
-Apollo GraphQL offers caching and keeping a Redux cache was not needed. I chose to use Redux to practice coordinating the two data stores and allow for optimistic updates in the future.
 
 </details>
 
@@ -63,32 +74,28 @@ Apollo GraphQL offers caching and keeping a Redux cache was not needed. I chose 
 <br>
 
 Created separate abstractions for data and component UI, mimicking MVC.
-- **Container components / Controllers** - manage high-level coordination of page tasks.
-- **Model layers** - handle implementation details of fetching, setting, and manipulating data.
 
 #### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/client-mvc.png)
 
 ![MVC architecture on the client](./readme-assets/client-mvc.png)
 
-#### Redux and GraphQL Models
+### Redux and GraphQL Models
 - Abstracts away vendor specific code for Apollo GraphQL and Redux
 - Houses client-side error handling for Apollo GraphQL
-- Uses React Hooks
 
-#### Client Operations Models
+### Client Operations Models
 - Manages implementation details of communicating between GraphQL and Redux
 - Presents high-level operations to the controllers
-- Uses React Hooks
 
-#### Container Components (Controllers)
-- Retrieves data from URL
-- Calls model methods for setting and retrieving data
-- Manages local component state
-- Handles events
-- Handles redirects
+### Container Components (Controllers)
+- Manage high-level coordination of page tasks.
+- Retrieves URL data
+- Calls model methods
+- Manages component state
+- Handles events and redirects
 - Pulls in UI and passes data
 
-#### Presentation Components (View)
+### Presentation Components (View)
 - Presents the data and styled UI
 
 <br>
@@ -175,6 +182,10 @@ useCreateWorkout() {
 </details>
 
 ---
+
+<!-- 
+TODO: Combine Apollo GraphQL server section with Server Organization
+-->
 
 ### Apollo GraphQL Server
 
@@ -274,6 +285,10 @@ return createWorkout
 
 ---
 
+<!--
+TODO: Move TypeScript out of drop down
+-->
+
 ### TypeScript
 
 <details>
@@ -301,14 +316,15 @@ The client is written entirely in TypeScript.
 
   <br>
 
-Configured Dockerfiles for both server and client and configured a single Docker Compose file for server, client, and database.
-
+- Configured Dockerfiles for both server and client.
+- Configured single Docker Compose for 3-tier setup.
+- Configured npm scripts to automate DB migration and seeding for local dev.
 
 ### Code Example
 
-[See full code - right click to open in new tab](https://github.com/msolorio/workout_app/blob/main/docker-compose.yml)
+[See Docker Compose File - right click to open in new tab](https://github.com/msolorio/workout_app/blob/main/docker-compose.yml)
 
-```yml
+<!-- ```yml
 version: "3.9"
 services:
   workoutdb:
@@ -353,11 +369,10 @@ services:
     volumes:
       - ./client:/app
 
-
 volumes:
   postgres-data:
 
-```
+``` -->
 </details>
 
 ---
