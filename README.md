@@ -4,14 +4,12 @@ https://gymbuddie.netlify.app/
 
 A full stack app for users to create and track their gym workouts.
 
+![Workout App 3 panel screenshot](./readme-assets/workout-app-3-panel.png)
+
 <!-- 
 TODO:
 - Add more images to readme
 - Add tech icons for technologies
--->
-
-<!--
-TODO: Screenshots of app here
 -->
 
 ---
@@ -19,19 +17,19 @@ TODO: Screenshots of app here
 ## Tech Used
 
 ### [Server](https://github.com/msolorio/workout-app)
-- Node
-- Apollo GraphQL
-- Prisma ORM
-- PostgreSQL
-- JWT
+<img alt="Node" src="https://img.shields.io/badge/-Node-05122A?style=flat&logo=node.js" height="25" /><br>
+<img alt="GraphQL" src="https://img.shields.io/badge/-Apollo_GraphQL-05122A?style=flat&logo=graphql&logoColor=e01897" height="25" /><br>
+<img alt="GraphQL" src="https://img.shields.io/badge/-Prisma-05122A?style=flat&logo=prisma&logoColor=48bb78" height="25" /><br>
+<img alt="PostgreSQL" src="https://img.shields.io/badge/-PostgreSQL-05122A?style=flat&logo=postgresql&logoColor=69bcff" height="25" /><br>
+<img alt="JWT" src="https://img.shields.io/badge/-JWT-05122A?style=flat&logo=jsonwebtokens&logoColor=31f2e6" height="25" />
 
 ### [Client](https://github.com/msolorio/workout-app-client)
 
-- TypeScript
-- React
-- Apollo GraphQL
-- Redux / Redux Toolkit
-- React Router
+<img alt="TypeScript" src="https://img.shields.io/badge/-TypeScript-05122A?style=flat&logo=typescript" height="25"/><br>
+<img alt="React" src="https://img.shields.io/badge/-React-05122A?style=flat&logo=react" height="25" /><br>
+<img alt="GraphQL" src="https://img.shields.io/badge/-Apollo_GraphQL-05122A?style=flat&logo=graphql&logoColor=e01897" height="25" /><br>
+<img alt="Redux" src="https://img.shields.io/badge/-Redux_/_Redux_Toolkit-05122A?style=flat&logo=redux&logoColor=a073d4" height="25" /><br>
+<img alt="Redux" src="https://img.shields.io/badge/-React_Router-05122A?style=flat&logo=reactrouter&logoColor=a073d4" height="25" />
 
 #### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/workout-app-architecture.png)
 
