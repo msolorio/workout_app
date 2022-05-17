@@ -9,7 +9,6 @@ A full stack app for users to create and track their gym workouts.
 <!-- 
 TODO:
 - Add more images to readme
-- Add tech icons for technologies
 -->
 
 ---
@@ -129,6 +128,7 @@ function CreateWorkout(): JSX.Element {
 ```
 
 ---
+
 ### Code Example - Create Workout Model
 `useCreateWorkout` creates a workout with Apollo GraphQL and stores in Redux. Hooks are used to manage model methods. In this case the hook returns a method to be invoked in an event handler.
 
@@ -181,16 +181,14 @@ useCreateWorkout() {
 
 ---
 
-<!-- 
-TODO: Combine Apollo GraphQL server section with Server Organization
--->
-
-### Apollo GraphQL Server
+### Server-Side Strategy
 
 <details>
   <summary>Learn More</summary>
 
 <br>
+
+### Apollo GraphQL Server
 
 Set up 5-model GraphQL API, enabling flexibility in traversing of data.
 
@@ -198,40 +196,33 @@ Set up 5-model GraphQL API, enabling flexibility in traversing of data.
 
 ![Workout App ERD](./readme-assets/workout-app-erd.png)
 
-The client specifies the exact data it needs.
+Client specifies the exact data it needs.
 
 ![GraphQL Request Response Example](./readme-assets/graph-ql.png)
 
-### Code Example
+#### Code Example
 [Check out the resolvers dir for the GraphQL implementation - right click to open in new tab](https://github.com/msolorio/workout_app_server/tree/main/src/resolvers)
 
-### Reflections and Future Features
-Building the Apollo GraphQL server was intuitive and a joy. It is exciting to enable complete data flexibility. I'm interested in using GraphQL more and learning about the problems it solves in the real-world.
-
-In the future I could add workout progress analysis features, where complex data fetching would be required. A feature could allow a user to see their progress overall, per workout, or per exercise.
-
-</details>
+#### Future Features
+In the future I can add workout progress analysis features, where complex data fetching would be required. A feature can allow a user to see their progress overall, per workout, or per exercise.
 
 ---
 
 ### Server Organization
 
-<details>
-  <summary>Learn More</summary>
-
 <br>
 
 Decoupled the GraphQL API layer from data fetching layer.
-- Allowing for easy repurposing of components.
-- GraphQL could be switched out for a REST API.
-- Prisma / Postgres model could be switched to accomodate a different database.
+- Allows for easy repurposing of components.
+- GraphQL can be switched out for a REST API.
+- Prisma / Postgres model can be switched to accomodate a different database.
 
 
 #### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/server-org.png)
 
 ![Workout App ERD](./readme-assets/server-org.png)
 
-### Code Example
+#### Code Example
 
 The Model method for creating a workout
 - Abstracts away vendor specific code for Prisma.
@@ -283,30 +274,6 @@ return createWorkout
 
 ---
 
-<!--
-TODO: Move TypeScript out of drop down
--->
-
-### TypeScript
-
-<details>
-  <summary>Learn More</summary>
-
-<br>
-
-The client is written entirely in TypeScript.
-
-### Lessons Learned
-- Became more aware of creating uniformity and a clear type strategy for my codebase.
-- Developed faster, catching subtle bugs early (often before they became bugs).
-
-### In-Progress
-- Currently converting the backend to TypeScript.
-
-</details>
-
----
-
 ### Docker
 
 <details>
@@ -314,15 +281,13 @@ The client is written entirely in TypeScript.
 
   <br>
 
-- Configured Dockerfiles for both server and client.
-- Configured single Docker Compose for 3-tier setup.
-- Configured npm scripts to automate DB migration and seeding for local dev.
+- Configured Dockerfiles for both server and client catching bugs early and easing deployment.
+- Configured single Docker Compose for 3-tier setup streamlining local development.
+- Configured npm scripts to automate DB migration and seeding for local dev on compose.
 
 ### Code Example
 
-[See Docker Compose File - right click to open in new tab](https://github.com/msolorio/workout_app/blob/main/docker-compose.yml)
-
-<!-- ```yml
+```yml
 version: "3.9"
 services:
   workoutdb:
@@ -367,28 +332,45 @@ services:
     volumes:
       - ./client:/app
 
+
 volumes:
   postgres-data:
+```
 
-``` -->
 </details>
 
 ---
 
 <br>
 
-## Todo Items
+## TypeScript 
+
+The client is written entirely in TypeScript.
+- Became more aware of creating uniformity and a clear type strategy for my codebase.
+- Allowed app to scale while minimizing cognitive load.
+- Caught subtle bugs early (often before they became bugs).
+
+### In-Progress
+Currently converting the backend to TypeScript.
+
+---
+
+<br>
+
+## Todo Items 📝
 This is an ongoing project with critical and non-critical features still to be built.
 - Move unprotected routes to the Express server. Completely deny access to Apollo server for unauthenticated requests.
 - Sanitize client inputs for XSS.
 - Sanitize client inputs for SQL-injection.
+- Write tests for the GraphQL API.
+- Write tests for Redux on the client.
+- Configure CI/CD with Jenkins for the client and server apps.
 - Improve related prisma queries for increased performance.
 - Implement optimistic updates for data writes with Redux.
 - Convert backend to TypeScript.
-- Currently running into a bug where unable to disable Apollo caching for certain key queries.
+- Currently running into a bug where unable to disable Apollo caching for certain key queries. Currently being addressed through page refreshes on logout.
 
-  
-## Future Implementations and Lessons Learned
+## Future Implementations and Lessons Learned 📚
 - **Use Deno on server** - for Native TypeScript support and better TypeScript tooling.
 - **Use ES Modules on server** - allow importing of TypeScript interfaces.
 - **Use non-hook GraphQL queries/mutations on client** - simplify tiered model methods.
