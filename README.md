@@ -1,10 +1,10 @@
-# Workout App
+# Gym Buddie
 
 https://gymbuddie.netlify.app/
 
 A full stack app for users to create and track their gym workouts.
 
-![Workout App 3 panel screenshot](./readme-assets/workout-app-3-panel.png)
+![Gym Buddie 3 panel screenshot](./readme-assets/workout-app-3-panel.png)
 
 <!-- 
 TODO:
@@ -38,31 +38,6 @@ TODO:
 
 ## Tech of Note
 
-### Client Caching Strategy
-
-<details>
-  <summary>Learn More</summary>
-
-<br>
-
-Handled data persistence with Apollo GraphQL and kept a local cache of user data with Redux.
-- Nearly instantaneous performance for data reads.
-- Decreased load on the server based on app use.
-
-Apollo GraphQL offers its own robust caching features. I chose to use Redux to practice coordinating two data stores and allow for optimistic updates in the future.
-
-#### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/client-data-strategy.png)
-
-![Workout app Architecture](./readme-assets/client-data-strategy.png)
-
-### Reflections and Future Features
-A Redux cache worked well here. Users read only their own data removing the risk of being out of sync with the DB. In the future, I would like to add a social component using Redis for caching shared data among users.
-
-
-</details>
-
----
-
 ### Client Organization
 
 <details>
@@ -77,15 +52,15 @@ Created separate abstractions for data and component UI, mimicking MVC.
 ![MVC architecture on the client](./readme-assets/client-mvc.png)
 
 ### Redux and GraphQL Models
-- Abstracts away vendor specific code for Apollo GraphQL and Redux
-- Houses client-side error handling for Apollo GraphQL
+- Abstracts away vendor specific code for Apollo GraphQL and Redux.
+- Houses client-side error handling for Apollo GraphQL.
 
 ### Client Operations Models
-- Manages implementation details of communicating between GraphQL and Redux
-- Presents high-level operations to the controllers
+- Manages implementation details of communicating between GraphQL and Redux.
+- Presents high-level operations to the controllers.
 
 ### Container Components (Controllers)
-- Manage high-level coordination of page tasks.
+- Manage high-level coordination of page tasks
 - Retrieves URL data
 - Calls model methods
 - Manages component state
@@ -159,6 +134,31 @@ useCreateWorkout() {
 
 ---
 
+### Client Caching Strategy
+
+<details>
+  <summary>Learn More</summary>
+
+<br>
+
+Handled data persistence with Apollo GraphQL and kept a local cache of user data with Redux.
+- Nearly instantaneous performance for data reads.
+- Decreased load on the server based on app use.
+
+Apollo GraphQL offers its own robust caching features. I chose to use Redux to practice coordinating two data stores and allow for optimistic updates in the future.
+
+#### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/client-data-strategy.png)
+
+![Workout app Architecture](./readme-assets/client-data-strategy.png)
+
+### Reflections and Future Features
+A Redux cache worked well here. Users read only their own data removing the risk of being out of sync with the DB. In the future, I would like to add a social component using Redis for caching shared data among users.
+
+
+</details>
+
+---
+
 ### Authentication with JWTs
 
 <details>
@@ -196,10 +196,6 @@ Set up 5-model GraphQL API, enabling flexibility in traversing of data.
 
 ![Workout App ERD](./readme-assets/workout-app-erd.png)
 
-Client specifies the exact data it needs.
-
-![GraphQL Request Response Example](./readme-assets/graph-ql.png)
-
 #### Code Example
 [Check out the resolvers dir for the GraphQL implementation - right click to open in new tab](https://github.com/msolorio/workout_app_server/tree/main/src/resolvers)
 
@@ -222,15 +218,21 @@ Decoupled the GraphQL API layer from data fetching layer.
 
 ![Workout App ERD](./readme-assets/server-org.png)
 
-#### Code Example
-
-The Model method for creating a workout
+Model
 - Abstracts away vendor specific code for Prisma.
 - Manages multiple DB interactions involved with fullfilling single mutation.
 - Closure wraps the model method and grant it error handling with `createHandledQuery`.
 
-[See full code - right click to open in new tab](https://github.com/msolorio/workout_app_server/blob/main/src/model/Workout/methods/createWorkout.js)
-```js
+Resolvers
+- Handles implemnetation details of Apollo GraphQL.
+- Extracts data from params.
+- Manages HTTP-only cookies for authentication.
+
+#### Code Examples
+- [Model Code](https://github.com/msolorio/workout_app_server/tree/main/src/model)
+- [Resolver Code](https://github.com/msolorio/workout_app_server/tree/main/src/resolvers)
+
+<!-- ```js
 ...
 async function query({
   name,
@@ -269,7 +271,7 @@ const createWorkout = createHandledQuery(query)
 
 return createWorkout
 ...
-```
+``` -->
 </details>
 
 ---
@@ -358,7 +360,7 @@ Currently converting the backend to TypeScript.
 <br>
 
 ## Todo Items 📝
-This is an ongoing project with critical and non-critical features still to be built.
+This is an ongoing project with many critical and non-critical features still to be built.
 - Move unprotected routes to the Express server. Completely deny access to Apollo server for unauthenticated requests.
 - Sanitize client inputs for XSS.
 - Sanitize client inputs for SQL-injection.
