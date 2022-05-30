@@ -34,6 +34,10 @@ TODO:
 
 ![Workout app Architecture](./readme-assets/workout-app-architecture.png)
 
+#### [ERD](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/workout-app-erd.png)
+
+![Workout App ERD](./readme-assets/workout-app-erd.png)
+
 ---
 
 ## Tech of Note
@@ -188,22 +192,6 @@ A Redux cache worked well here. Users read only their own data removing the risk
 
 <br>
 
-### Apollo GraphQL Server
-
-Set up 5-model GraphQL API, enabling flexibility in traversing of data.
-
-#### [Expand Image - Right click to open in new tab](https://raw.githubusercontent.com/msolorio/workout_app/main/readme-assets/workout-app-erd.png)
-
-![Workout App ERD](./readme-assets/workout-app-erd.png)
-
-#### Code Example
-[Check out the resolvers dir for the GraphQL implementation - right click to open in new tab](https://github.com/msolorio/workout_app_server/tree/main/src/resolvers)
-
-#### Future Features
-In the future I can add workout progress analysis features, where complex data fetching would be required. A feature can allow a user to see their progress overall, per workout, or per exercise.
-
----
-
 ### Server Organization
 
 <br>
@@ -231,6 +219,15 @@ Resolvers
 #### Code Examples
 - [Model Code](https://github.com/msolorio/workout_app_server/tree/main/src/model)
 - [Resolver Code](https://github.com/msolorio/workout_app_server/tree/main/src/resolvers)
+
+---
+
+### Apollo GraphQL Server
+
+Using GraphQL allows for more rapid innovation on the client where complex data fetching would be required. In the future I'd like to add workout progress analysis features. A feature can allow a user to see visualize their progress overall, per workout, or per exercise.
+
+#### Code Example
+[Check out the resolvers dir for the GraphQL implementation - right click to open in new tab](https://github.com/msolorio/workout_app_server/tree/main/src/resolvers)
 
 <!-- ```js
 ...
@@ -351,9 +348,6 @@ The client is written entirely in TypeScript.
 - Became more aware of creating uniformity and a clear type strategy for my codebase.
 - Allowed app to scale while minimizing cognitive load.
 - Caught subtle bugs early (often before they became bugs).
-
-### In-Progress
-Currently converting the backend to TypeScript.
 
 ---
 
