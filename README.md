@@ -345,9 +345,9 @@ volumes:
 ## TypeScript 
 
 The client is written entirely in TypeScript.
-- Became more aware of creating uniformity and a clear type strategy for my codebase.
 - Allowed app to scale while minimizing cognitive load.
 - Caught subtle bugs early (often before they became bugs).
+- Helped create uniformity across the codebase.
 
 ---
 
