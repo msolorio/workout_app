@@ -1,10 +1,10 @@
-# Gym Buddie
+# Gymara
 
-https://gymbuddie.netlify.app/
+https://gymara.netlify.app/
 
-A full stack app for users to create and track their gym workouts.
+A full stack app for tracking gym workouts featuring a client-side Redux cache, GraphQL API layer, and secure authentication with JWTs.
 
-![Gym Buddie 3 panel screenshot](./readme-assets/workout-app-3-panel.png)
+<!-- ![Gym Buddie 3 panel screenshot](./readme-assets/workout-app-3-panel.png) -->
 
 <!-- 
 TODO:
