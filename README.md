@@ -156,7 +156,9 @@ Apollo GraphQL offers its own robust caching features. I chose to use Redux to p
 ![Workout app Architecture](./readme-assets/client-data-strategy.png)
 
 ### Reflections and Future Features
-A Redux cache worked well here. Users read only their own data removing the risk of being out of sync with the DB. In the future, I would like to add a social component using Redis for caching shared data among users.
+A Redux cache worked well here. Users read only their own data removing the risk of being out of sync with the DB. In the future I'd like to explore other options for managing global state in a React application, such as exploring Apollo's caching features.
+
+As a future feature, I would like to add a social component using Redis for caching shared data among users.
 
 
 </details>
@@ -217,8 +219,73 @@ Resolvers
 - Manages HTTP-only cookies for authentication.
 
 #### Code Examples
-- [Model Code](https://github.com/msolorio/workout_app_server/tree/main/src/model)
-- [Resolver Code](https://github.com/msolorio/workout_app_server/tree/main/src/resolvers)
+
+#### The Model Method for Creating a Workout
+- Model method abstracts implementation details of creating a workout, such as creating associated excercises.
+- The query wrapped in a higher order function granting it error handling.
+
+```js
+
+...
+async function query({
+  name,
+  description,
+  length,
+  location,
+  exercises,
+  userId
+}) {
+
+  const createdWorkout = await prisma.workout.create({
+    data: {
+      name: name,
+      description: description,
+      length: length,
+      location: location,
+      userId: Number(userId)
+    }
+  })
+
+  if (exercises) {
+    const formattedExercises = exercises.map(ex => {
+      ex.workoutId = Number(createdWorkout.id);
+      return ex;
+    })
+  
+    await prisma.exercise.createMany({
+      data: formattedExercises
+    })
+  }
+
+  return { createdWorkout };
+}
+
+
+const createWorkout = createHandledQuery(query)
+
+...
+```
+
+#### Resolver for Creating a Workout
+- Pulls arguments from the request and invokes the model method.
+- Designed to be minimal.
+
+```js
+...
+
+createWorkout: async (parent, args, context) => {
+  const modelArgs = {
+    ...args,
+    userId: context.userId
+  }
+
+  const { createdWorkout } = await Workout.createWorkout(modelArgs)
+
+  return createdWorkout
+},
+
+...
+```
 
 ---
 
